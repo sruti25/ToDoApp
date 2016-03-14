@@ -22,6 +22,7 @@ while($row=mysql_fetch_assoc($query)){
 			$new_task_id=$row['id'];
 		}
 		mysql_close();
+		//send response
 		echo '<tr class="row_details"><td>'.$new_task_id.'</td><td>'.$new_task_details.'</td><td>'.$new_task_time.'</td><td><button class="delete_button" id='.$new_task_id.'>Delete</button></td></tr>';
 	
 ?>

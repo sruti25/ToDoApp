@@ -36,28 +36,27 @@ if ($conn->connect_error) {
 			</tr>
 		<?php }
 	} ?>
-
+	<div id="ajax_display"></div>
 	</table><br>
 	<form>
 	New Task:<br>
-	<input type="text" id = "task" name="new_task" size = 20><button id="add">Insert</button>
+	<input type="text" id = "task" size = 20><button id="add">Insert</button>
 	</form>
 </body>
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
 <script>
 document.getElementById("add").onclick=function() {
-var xhttp;
-xhttp = new XMLHttpRequest();
-var ins =document.getElementById("task").value;
-alert(ins);
-xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		data = xmlhttp.responseText;
-		$('.row_details').first().before(data);
-	    }
+	var xhttp = new XMLHttpRequest();	//Create a request object
+	var ins =document.getElementById("task").value;
+	xhttp.onreadystatechange = function() {	//this event is triggered every time the readyState changes.
+        	if (xhttp.readyState == 4 && xhttp.status == 200) {	//4:request finished and response is ready, 200:OK
+			var ajaxDisplay = document.getElementById('ajax_display');
+         		ajaxDisplay.innerHTML = ajaxRequest.responseText;
+	    	}
 	}
-xhttp.open("GET", "insert.php?new_task="+ins, true);
-xhttp.send();
+	//get the value from user and pass it to server script.
+	xhttp.open("GET", "insert.php?new_task="+ins, true);
+	xhttp.send();
 }
 </script>
 </html>
