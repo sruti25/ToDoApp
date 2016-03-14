@@ -51,7 +51,7 @@ document.getElementById("add").onclick=function() {
 	xhttp.onreadystatechange = function() {	//this event is triggered every time the readyState changes.
         	if (xhttp.readyState == 4 && xhttp.status == 200) {	//4:request finished and response is ready, 200:OK
 			var ajaxDisplay = document.getElementById('ajax_display');
-         		ajaxDisplay.innerHTML = ajaxRequest.responseText;
+         		ajaxDisplay.innerHTML = xhttp.responseText;
 	    	}
 	}
 	//get the value from user and pass it to server script.
