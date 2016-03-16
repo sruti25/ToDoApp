@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title> Todo App </title>
+	<script type="text/javascript" src="jquery-1.12.1.js"></script>
 </head>
 <?php
 $servername = "localhost";
@@ -28,11 +29,11 @@ if ($conn->connect_error) {
 	if($result->num_rows>0)
 	{
 		while($row = $result->fetch_assoc()) { ?>
-			<tr class = "row_details">
+			<tr id="<?php echo $row[id]?>">
 			<td><?php echo "$row[id]";?> </td>
 			<td><?php echo "$row[task]";?> </td>
 			<td><?php echo "$row[time]";?> </td>
-			<td><button id="<?php echo $row[id]?>">Delete</button></td>
+			<td><button class="delete_entry" id="<?php echo $row[id]?>">Delete</button></td>
 			</tr>
 		<?php }
 	} ?>
@@ -43,7 +44,7 @@ if ($conn->connect_error) {
 	<input type="text" id = "task" size = 20><button id="add">Insert</button>
 	</form>
 </body>
-<script type="text/javascript" src="jquery-1.9.1.js"></script>
+
 <script>
 document.getElementById("add").onclick=function() {
 	var xhttp = new XMLHttpRequest();	//Create a request object
@@ -58,5 +59,14 @@ document.getElementById("add").onclick=function() {
 	xhttp.open("GET", "insert.php?new_task="+ins, true);
 	xhttp.send();
 }
+
+	$(".delete_entry").click(function() {
+		curr_element = $(this);
+		$.post('delete.php',{del_id: $(this).attr('id')},function(data,status) {
+					curr_element.parent().parent().fadeOut("fast",function() {
+					$(this).remove();}); 
+		});
+	});
+
 </script>
 </html>
